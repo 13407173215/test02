@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        它里面的UserService属性要进行赋值
+            第一种:使用有参构造进行属性的注入,使用<constructor-arg>标签注入
+            第二种:使用set方法进行属性的注入
+            第三种:p命名空间的方式注入
+        要注入的属性类型:
+            1. 对象(spring核心容器中的)类型: ref="对象的id"
+            2. 简单类型: String、int、Integer: value="要注入的数据"
+
+    -->
+    <bean id="userController" class="com.itheima.controller.UserController"
+          p:userService-ref="userService">
+        <!--构造函数注入-->
+        <!--<constructor-arg name="userService" ref="userService"></constructor-arg>-->
+
+        <!--set方法注入-->
+        <!--<property name="userService" ref="userService"></property>-->
+    </bean>
+
+    <!--
+        它里面的userDao属性要进行赋值
+    -->
+    <bean id="userService" class="com.itheima.service.impl.UserServiceImpl" p:userDao-ref="userDao">
+        <!--构造函数方式注入-->
+        <!--<constructor-arg name="userDao" ref="userDao"></constructor-arg>-->
+        <!--set方法注入-->
+        <!--<property name="userDao" ref="userDao"></property>-->
+    </bean>
+
+
+    <bean id="userDao" class="com.itheima.dao.impl.UserDaoImpl"
+          p:stringArray="1,2,3,4,5"
+          p:age="28"
+          p:username="奥巴马">
+        <!--set方法注入-->
+        <!--<property name="age" value="28"></property>
+        <property name="username" value="奥巴马"></property>-->
+
+        <!--注入数组-->
+        <!--<property name="stringArray">
+            <array>
+                <value>hello1</value>
+                <value>hello2</value>
+                <value>hello3</value>
+                <value>hello4</value>
+            </array>
+        </property>-->
+
+        <!--注入map-->
+        <property name="map">
+            <map>
+                <entry key="username" value="aobama"></entry>
+                <entry key="pwd" value="123456"></entry>
+                <entry key="address" value="召唤师峡谷"></entry>
+            </map>
+        </property>
+    </bean>
+</beans>
